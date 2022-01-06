@@ -4,6 +4,7 @@ const axios = require('axios');
 const cacheMiddleware = require('./middlewares/cacheMiddleware');
 
 const cache = require('./service/cache');
+const redisMiddleware = require('./middlewares/redisMiddleware');
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.get("/", (req, res, next) => {
     })
 })
 
-app.get("/countries", cacheMiddleware, (req, res, next) => {
+app.get("/countries", redisMiddleware, (req, res, next) => {
     axios.get('https://countries.bloggernepal.com/countries/').then(response => {
         // console.log(response)
         res.json({
